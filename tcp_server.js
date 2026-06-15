@@ -1,14 +1,15 @@
 import net from 'node:net';
 
 const IP = '127.0.0.1';
-const PORT = 8124;
+const PORT = ((fallback) => {
+    const parsed = parseInt(process.argv[2]);
+    return !isNaN(parsed) && parsed.toString().length === 4 ? parsed : fallback;
+})(8124);
 
 const onClientDataReceived = (socket, buf) => {
     const msg = buf.toString().trim();
-
     console.log('socket got incoming packet: ', msg);
     console.log(`package received from: family ${socket.remoteFamily} port ${socket.remotePort}`);
-
     switch (msg) {
         case 'hello':
             socket.write('world\n');
@@ -22,7 +23,6 @@ const onClientDataReceived = (socket, buf) => {
 
 net.createServer((socket) => {
     // socket is an instance of <stream.Duplex> (one's can both brew install ngrokread from it and write to it) and <EventEmitter>    // SYN_SENT
-
     const { address, family, port } = socket.address();
     const addressFamily = net.isIP(address);
     // socket.setEncoding('utf8');
