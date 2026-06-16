@@ -9,10 +9,17 @@ node tcp_server.js 8080
 
 ## Terminal 2: Monitor TCP server-client socket states
 ```bash
-while true; netstat -an -t tcp | grep 8080; sleep 2; done
+./monitor.sh
 ```
 
-## Terminal 3: Establish client socket connection
+## TCP client options:
+
+### Terminal 3: Establish client socket connection via telnet
 ```bash
 telnet localhost 8080
+```
+
+### Terminal 3: Establish client socket connection via node.js tcp client
+```js
+node tcp_client.js
 ```

@@ -1,10 +1,8 @@
 import net from 'node:net';
+import { getPort } from './utils.js';
 
 const IP = '127.0.0.1';
-const PORT = ((fallback) => {
-    const parsed = parseInt(process.argv[2]);
-    return !isNaN(parsed) && parsed.toString().length === 4 ? parsed : fallback;
-})(8124);
+const PORT = getPort();
 
 const onClientDataReceived = (socket, buf) => {
     const msg = buf.toString().trim();
@@ -16,12 +14,14 @@ const onClientDataReceived = (socket, buf) => {
             break;
         case 'bye':
             socket.end('good by then!\n');
+            // server sends FIN and moves to FIN_WAIT_1
         default:
             console.log('message was not handled');
     }
 };
 
 net.createServer((socket) => {
+    // socket state: receive SYN = SYNC_RCVD, reply with SYN+ACK
     // socket is an instance of <stream.Duplex> (one's can both brew install ngrokread from it and write to it) and <EventEmitter>    // SYN_SENT
     const { address, family, port } = socket.address();
     const addressFamily = net.isIP(address);
@@ -32,6 +32,7 @@ net.createServer((socket) => {
     socket
         .on('data', (buf) => onClientDataReceived(socket, buf))
         .on('end', () => {
+            // server receives FIN acks it and moves to TIME_WAIT and gets closed
             console.log('client disconnected');
         })
         .on('close', (hadError) => {
@@ -46,7 +47,8 @@ net.createServer((socket) => {
     socket.write(`first hello from server: family ${addressFamily} port: ${port}\n`);
 })
     .on('connection', (socket) => {
-        // ESTABLISHED
+        // new connection established, handshake completed
+        // server receives ACK -> server moves to ESTABLISHED
         // emits each time a new client socket has been received
         console.log('server instance has gotten "connection" event.');
         console.log('socket local address', socket.address());
@@ -57,6 +59,7 @@ net.createServer((socket) => {
         throw new err;
     })
     .listen(PORT, () => {
+        // socket state: LISTEN
         // The server is listening on socket 127.0.0.1:8124 means
         // means: "The process has registered a socket with the operating system and is waiting for the kernel to deliver incoming connection requests arriving at port 8124."
         console.log(`TCP server is listening on ${IP}:${PORT}`);
