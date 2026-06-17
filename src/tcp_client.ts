@@ -7,7 +7,7 @@ const socket = net.createConnection({ port: PORT }, () => {
     // socket state: SYN_SENT (client sent SYN)
     // socket state: client receives SYN+ACK, sends ACK -> client moves to ESTABLISHED
     console.log('Connected to server: SYN_RCVD');
-    const { address, family, port } = socket;
+    const { address, port } = socket.address();
     const addressFamily = net.isIP(address);
     socket.write(`first hello from client: family ${addressFamily} port ${port}`);
 })

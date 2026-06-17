@@ -1,0 +1,28 @@
+{
+  "name": "tcp-server",
+  "version": "1.0.0",
+  "description": "```js node tcp_server.js 8080 ```",
+  "main": "tcp_server.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isitinme/node-tcp-server.git"
+  },
+  "keywords": [
+    "TCP"
+  ],
+  "packageManager": "npm@11.7.0",
+  "author": "isitinme",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/isitinme/node-tcp-server/issues"
+  },
+  "homepage": "https://github.com/isitinme/node-tcp-server#readme",
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "typescript": "^6.0.3"
+  }
+}

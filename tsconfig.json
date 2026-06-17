@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "es2022",
+        "lib": [
+            "ES2020"
+        ],
+        "outDir": "dist",
+        "rootDir": ".",
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "noEmitOnError": true,
+        "incremental": true,
+        "tsBuildInfoFile": ".tsbuildinfo",
+        "types": [
+            "node"
+        ]
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
