@@ -2,9 +2,9 @@
 
 # TL;DR;
 
-## Terminal 1: See the server logs
-```js
-node tcp_server.js 8080
+## Terminal 1: Start TCP server
+```bash
+npm start 8080
 ```
 
 ## Terminal 2: Monitor TCP server-client socket states
@@ -14,12 +14,12 @@ node tcp_server.js 8080
 
 ## TCP client options:
 
-### Terminal 3: Establish client socket connection via telnet
+### 1. Establish client socket connection via telnet
 ```bash
 telnet localhost 8080
 ```
 
-### Terminal 3: Establish client socket connection via node.js tcp client
-```js
-node tcp_client.js
+### 2. Establish client socket connection via node.js tcp client
+```bash
+npm run start:client 8080
 ```
