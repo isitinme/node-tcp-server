@@ -1,17 +1,19 @@
 {
     "compilerOptions": {
         "target": "ES2020",
-        "module": "es2022",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "lib": [
             "ES2020"
         ],
         "outDir": "dist",
-        "rootDir": ".",
+        "rootDir": "src",
         "strict": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "allowJs": true,
+        "resolveJsonModule": true,
         "noEmitOnError": true,
         "incremental": true,
         "tsBuildInfoFile": ".tsbuildinfo",
@@ -20,9 +22,7 @@
         ]
     },
     "include": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.js"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",
