@@ -1,3 +1,15 @@
+/**
+* Use module: "NodeNext" and moduleResolution: "NodeNext"
+* if you are authoring a backend application or a library specifically targeting Node.js
+*/
+
+/**
+* To use nodenext properly, your project must adhere to strict structural rules to prevent Node.js crashes:
+1. File Extensions: You must use .js (or .mjs / .cjs) extensions in your .ts source files when importing local modules.
+    TypeScript leaves these untouched in the output
+2. package.json Type: Ensure "type": "module" is set if you primarily want to use ES Modules (ESM) globally across the project.
+3. Dual Resolution: Setting "module": "NodeNext" automatically implies "moduleResolution": "NodeNext"; defining both is standard practice
+*/
 {
     "compilerOptions": {
         "target": "ES2020",

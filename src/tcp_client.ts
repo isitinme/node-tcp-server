@@ -1,37 +1,36 @@
+import readline from 'node:readline';
 import net, { AddressInfo } from 'node:net';
-import { getPort } from './utils.js';
+import { getPort, getSocketLocalAddressInfo } from './utils.js';
 
 const PORT = getPort();
+const RL = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
 const socket = net.createConnection({ port: PORT }, () => {
     // socket state: SYN_SENT (client sent SYN)
     // socket state: client receives SYN+ACK, sends ACK -> client moves to ESTABLISHED
     console.log('Connected to server: SYN_RCVD');
-    const addr = socket.address();
-    let address = '';
-    let port = 0;
-    if (typeof addr === 'string') {
-        address = addr;
-    } else if (addr && typeof addr === 'object' && 'address' in addr) {
-        const a = addr as AddressInfo;
-        address = a.address;
-        port = a.port;
-    }
+
+    const { address, port, family } = getSocketLocalAddressInfo(socket.address() as AddressInfo);
     const addressFamily = net.isIP(address);
-    socket.write(`first hello from client: family ${addressFamily} port ${port}`);
+    console.log(`socket client info: addressFamily ${addressFamily} port ${port} family ${family}`);
+
+    socket.write('hello\n');
 });
 
 socket
     .on('data', (buf: Buffer) => {
         const msg = buf.toString().trim();
         console.log(`Received message from server: ${msg}`);
-        socket.write('hello\n');
-        if (msg === 'world') {
-            socket.write('bye');
-        }
+        RL.question('Reply to server:', (msg) => {
+            socket.write(`${msg}\n`)
+        });
     })
     .on('close', (hadError: boolean) => {
         console.log('Client socket has been closed. Had transmission error: ', hadError);
+        RL.close();
     })
     .on('end', () => {
         // client receives FIN from server, kernel acks it automatically, client moves to CLOSE_WAIT

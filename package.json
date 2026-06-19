@@ -7,9 +7,9 @@
     "build": "tsc",
     "start": "node dist/tcp_server.js",
     "start:client": "node dist/tcp_client.js",
-    "dev": "ts-node-esm src/tcp_server.ts",
-    "dev:client": "ts-node-esm src/tcp_client.ts",
-    "dev:watch": "nodemon --watch src --ext ts --exec \"ts-node-esm src/tcp_server.ts\""
+    "dev": "tsx src/tcp_server.ts",
+    "dev:client": "tsx src/tcp_client.ts",
+    "dev:watch": "nodemon --watch src --ext ts --exec \"tsx src/tcp_server.ts\""
   },
   "repository": {
     "type": "git",
@@ -28,8 +28,9 @@
   "homepage": "https://github.com/isitinme/node-tcp-server#readme",
   "devDependencies": {
     "@types/node": "^25.9.3",
-    "typescript": "^6.0.3",
+    "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
-    "nodemon": "^2.0.22"
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   }
 }
